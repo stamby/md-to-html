@@ -1,2 +1,3 @@
 # md-to-html
-Sed script that converts Markdown to HTML code
+
+Usage: `./md-to-html.sed file1.md file2.md ... > index.html`
