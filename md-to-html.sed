@@ -12,7 +12,7 @@
     x
     # This is where the code block ends
     s/.*/<\/code><\/pre>/
-    t
+    b
 }
 
 # If a block of code is being processed, jump onto the next line
