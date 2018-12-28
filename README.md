@@ -1,6 +1,6 @@
 # md-to-html
 
-## How to test this script
+## How to try this script
 
 ```shell
 git clone https://github.com/stamby/md-to-html
