@@ -36,9 +36,6 @@ if (isAwesome){
 }
 ```
 
-[Google](https://google.com)
+[Repo](https://github.com/stamby/md-to-html)
 
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-
-
-###### 6
