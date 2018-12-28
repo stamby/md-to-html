@@ -36,6 +36,6 @@ if (isAwesome){
 }
 ```
 
-[Repo](https://github.com/stamby/md-to-html)
+[Github](https://github.com/stamby/md-to-html)
 
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
