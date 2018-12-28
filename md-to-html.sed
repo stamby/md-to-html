@@ -46,29 +46,41 @@ s/(^|[^_])_([^_]+)_([^_]|$)/\1<i>\2<\/i>\3/g
 # `text`
 s/(^|[^`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 
-# Numbered lists
-/^ *[0-9]+\./{
+# Numbered lists, bulleted lists, blockquotes
+/^ *[0-9]+\.|^ *[\*-] *[\*-]|^ *>/{
+    # One space or none for the main index (will remove leading spaces)
+    s/^ ([^ ])/\1/
+    # Two spaces and up for the subindexes (leading spaces will be fixed)
     s/^ +/  /
-    s/^( *)[0-9]+\. *(.*)/\1<li>\2<\/li>/
     # Append the previous line in hold space to the current pattern space
     x
     G
-    # Remove leading newlines if any
+    # Remove leading new lines if any
     s/^\n//
     # This line goes to hold space and gets removed for now
     h
     d
 }
 
+# Find out what's being processed
 x
-/^<li>/{
+
+# Map numeric subindexes
+s/((^  |\n  )[0-9]+ *[\.-] *([^\n]+)(\n|$))+/\n  <ol>&\n  <\/ol>\n/g
+:a
+s/(^  |\n  )[0-9]+ *[\.-] *([^\n]+)(\n|$)/\1<li>\2<\/li>\3/g
+ta
+
+# Remove extra lines
+s/\n\n/\n/g
+s/\n$//
+
+/^[0-9]+ *[\.-] */{
+    s/(^|\n)[0-9]+ *[\.-] *([^\n]+)(\n|$)/\1<li>\2<\/li>\3/g
     s/.*/<ol>\n&\n<\/ol>\n/
-    # Add leading "<ol>" tags
-    s/(\n<li>[^\n]+<\/li>\n)(  <li>)/\1  <ol>\n\2/g
-    # Add trailing "</ol>" tags
-    s/(\n  <li>[^\n]+<\/li>\n)(<li>|<\/ol>)/\1  <\/ol>\n\2/g
     b
 }
+
 x
 
 # No headers means it's a normal paragraph
