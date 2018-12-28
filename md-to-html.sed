@@ -1,6 +1,7 @@
 #!/bin/sed -Ef
 # https://guides.github.com/features/mastering-markdown/
 
+# Code snippets
 /^ *```/{
     # Exchange hold and pattern spaces
     x
