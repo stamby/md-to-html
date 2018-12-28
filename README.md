@@ -9,4 +9,4 @@ chmod +x md-to-html.sed
 ./md-to-html.sed example.md > /tmp/example.html
 ```
 
-Then open file:///tmp/example.html to see the result.
+Then open `file:///tmp/example.html` with your browser to see the result.
