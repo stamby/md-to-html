@@ -1,5 +1,7 @@
 # md-to-html
 
+**Note:** combining two different types of lists does not work properly, although this is seldom used in Markdown syntax.
+
 ## How to try this script
 
 ```shell
