@@ -24,6 +24,8 @@ x
 }
 x
 
+# Per-word formatting
+
 # ![image](url)
 s/!\[(.*)\] *\((.+)\)/<img src="\2" alt="\1">/g
 s/!\((.*)\)/<img src="\1">/g
@@ -43,48 +45,65 @@ s/(^|[^_])_{2}([^_]+)_{2}([^_]|$)/\1<b>\2<\/b>\3/g
 s/(^|[^\*])\*([^\*]+)\*([^\*]|$)/\1<i>\2<\/i>\3/g
 s/(^|[^_])_([^_]+)_([^_]|$)/\1<i>\2<\/i>\3/g
 
+# ~~text~~
+s/(^|[^~])~~([^~]+)~~([^~]|$)/\1<s>\2<\/s>\3/
+
 # `text`
 s/(^|[^`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 
 # Numbered lists, bulleted lists, blockquotes
-/^ *[0-9]+\.|^ *[\*-] *[\*-]|^ *>/{
-    # One space or none for the main index (will remove leading spaces)
-    s/^ ([^ ])/\1/
-    # Two spaces and up for the subindexes (leading spaces will be fixed)
-    s/^ +/  /
-    # Append the previous line in hold space to the current pattern space
+/^ *[0-9]+ *[\.-]|^ *[\*-] *[\*-]|^ *>/{
+    # Append the previously held space to the current space
     x
     G
-    # Remove leading new lines if any
-    s/^\n//
-    # This line goes to hold space and gets removed for now
-    h
-    d
+    # Only when we are not at the last line
+    $!{
+        # The current space goes to hold space and gets removed for now
+        h
+        d
+    }
 }
 
-# Find out what's being processed
+# Find out what's being held
 x
 
-# Map numeric subindexes
-s/((^  |\n  )[0-9]+ *[\.-] *([^\n]+)(\n|$))+/\n  <ol>&\n  <\/ol>\n/g
-:a
-s/(^  |\n  )[0-9]+ *[\.-] *([^\n]+)(\n|$)/\1<li>\2<\/li>\3/g
-ta
+/(^|\n) *[0-9]+ *[\.-]/{
+    # Add "<li>" and "</li>" to all occurrences
+    s/(^|\n)( *)[0-9]+ *[\.-] *([^\n]+)/\1\2<li>\3<\/li>/g
+    # Check whether there are subtrees
+    /\n * <li>/{
+        # Note that these are assumed to start with a new line and a space
+        # Add "<ol>" and "</ol>" delimiters for subtrees
+        s/\n( +)<li>[^\n]+<\/li>(\n\1<li>[^\n]+<\/li>)*/\n\1<ol>&\n\1<\/ol>/g
+    }
+    # Add them for the main tree
+    s/(^|\n)( *)(<li>.*)(<\/ol>|<\/li>)/\1\2<ol>\n\2\3\4\n\2<\/ol>/
+}
 
-# Remove extra lines
-s/\n+\n/\n/g
-s/\n$//
+# This is an exact copy of the previous block
+# except for the regular expression and HTML tags
+/(^|\n) *[\*-] *[\*-]/{
+    s/(^|\n)( *) *[\*-] *[\*-] *([^\n]+)/\1\2<li>\3<\/li>/g
+    /\n * <li>/{
+        s/\n( +)<li>[^\n]+<\/li>(\n\1<li>[^\n]+<\/li>)*/\n\1<ul>&\n\1<\/ul>/g
+    }
+    s/(^|\n)( *)(<li>.*)(<\/ul>|<\/li>)/\1\2<ul>\n\2\3\4\n\2<\/ul>/
+}
 
-/^[0-9]+ *[\.-] */{
-    s/(^|\n)[0-9]+ *[\.-] *([^\n]+)(\n|$)/\1<li>\2<\/li>\3/g
-    s/.*/<ol>\n&\n<\/ol>\n/
+# If any of the previous matches were successful
+/<li>/{
+    # Add new lines in the right places
+    s/^\n*(.*)\n?/\1\n/
+    # If this is the last line, remove the exceeding new line
+    $s/\n$//
+    # Go to the end of script
     b
 }
 
 x
 
 # No headers means it's a normal paragraph
-s/^[^# ]+.*/<p>&<\/p>/;t
+s/^ *[^#].*/<p>&<\/p>/;t
 
 # Headers
 s/^ *#{6} *([^#].*)*$/<h6>\1<\/h6>/;t
