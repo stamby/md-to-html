@@ -1,5 +1,7 @@
 # md-to-html
 
+**Note if your text ends in a list or a block quote:** end your text with an empty line, or some lines will be skipped. This is a bug.
+
 ## How to try this script
 
 ```shell
