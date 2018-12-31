@@ -1,5 +1,6 @@
 #!/bin/sed -Ef
-# https://guides.github.com/features/mastering-markdown/
+
+### md-to-html: Sed script that converts Markdown to HTML code
 
 # Code snippets
 /^ *```/{
