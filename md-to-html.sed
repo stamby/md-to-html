@@ -57,12 +57,10 @@ s/(^|[^`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
     # Append the previously held space to the current space
     x
     G
-    # Only when we are not at the last line
-    $!{
-        # The current space goes to hold space and gets removed for now
-        h
-        d
-    }
+    # The current space goes to hold space
+    h
+    # Only when we are not at the last line, start a new cycle
+    $!d
 }
 
 # Find out what's being held
