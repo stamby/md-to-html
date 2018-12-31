@@ -1,6 +1,6 @@
 # md-to-html
 
-**Note if your text ends in a list or a quote:** end your text with an empty line, or some lines will be skipped. This is a bug.
+**Note if your text ends in a list or a quote:** end your text with an empty line, else all lines except the first one will be skipped. This is a bug.
 
 ## How to try this script
 
