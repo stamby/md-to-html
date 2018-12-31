@@ -82,7 +82,7 @@ x
 }
 
 # These are copied from the previous block
-# except for the regular expression and HTML tags
+# except for the regular expressions and HTML tags
 /(^|\n) *[\*-] *[^\*-]/{
     s/(^|\n)( *) *[\*-] *([^\n]+)/\1\2<li>\3<\/li>/g
     /\n * <li>/{
