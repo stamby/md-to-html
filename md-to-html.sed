@@ -100,7 +100,7 @@ x
     s/(^|\n)( *)(<li>.*)(<\/ol>|<\/li>)/\1\2<ol>\n\2\3\4\n\2<\/ol>/
 }
 
-# These are copied from the previous blocks
+# These are copied from the previous block
 # except for the regular expression and HTML tags
 /(^|\n) *[\*-] *[^\*-]/{
     s/(^|\n)( *) *[\*-] *([^\n]+)/\1\2<li>\3<\/li>/g
