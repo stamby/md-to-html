@@ -91,7 +91,7 @@ x
 }
 
 # If any of the previous matches were successful
-/<li>/{
+/\n *<li>/{
     # Add new lines in the right places
     s/^\n*(.*)\n?/\1\n/
     # If this is the last line, remove the exceeding new line
