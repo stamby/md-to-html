@@ -1,24 +1,4 @@
 #!/bin/sed -Ef
-
-### md-to-html: Sed script that converts Markdown to HTML code
-
-# Code snippets
-/^ *```/{
-    # Exchange hold and pattern spaces
-    x
-    # Hold space did not start with three backticks
-    /^ *```/!s/.*/<pre><code>/
-    t
-    # Remove everything from the hold space
-    s/.*//
-    x
-    # This is where the code block ends
-    s/.*/<\/code><\/pre>/
-    b
-}
-
-# If a block of code is being processed, jump onto the next line
-x#!/bin/sed -Ef
 # https://guides.github.com/features/mastering-markdown/
 
 # Code snippets
