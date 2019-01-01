@@ -67,11 +67,7 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 ## Numbered lists, bulleted lists, blockquotes
 
 /^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *>/{
-    # Append the previously held space to the current space
-    x
-    G
-    # The current space goes to hold space
-    h
+    H
     # Only when we are not at the last line, start a new cycle
     $!d
 }
