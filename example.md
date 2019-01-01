@@ -3,7 +3,7 @@
 ## This is the second header
 
 1. One
-  1. 1.1
+  1a. 1.1
 2. Two
   2. 2.1
   3. 2.2
