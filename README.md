@@ -13,7 +13,7 @@ chmod +x md-to-html.sed
 
 Then open `file:///tmp/example.html` with your browser to see the result.
 
-It also works like this:
+It also works like this using Bash:
 
 ```shell
 ./md-to-html.sed <<< '1. Hello!'
