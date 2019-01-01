@@ -4,6 +4,8 @@
 
 ## How to try this script
 
+Try this from your terminal:
+
 ```shell
 git clone https://github.com/stamby/md-to-html
 cd md-to-html
