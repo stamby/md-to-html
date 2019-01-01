@@ -120,7 +120,7 @@ x
 
 # Remove escape characters from special Markdown characters
 # This affects all lines whether they're in list or not
-s/\\(`|\*|_|\{|\}|\[|\]|\(|\)|#|\+|-|\.|!)/\1/g
+s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
 
 # If any of the previous matches were successful
 /\n *<li>|(^|\n) *<blockquote>/{
@@ -133,6 +133,9 @@ s/\\(`|\*|_|\{|\}|\[|\]|\(|\)|#|\+|-|\.|!)/\1/g
 }
 
 x
+
+# Remove escape characters again (exact copy of the former)
+s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
 
 ## Headers and paragraphs
 
