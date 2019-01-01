@@ -89,7 +89,7 @@ x
         s/\n( +)<li>[^\n]+<\/li>(\n\1<li>[^\n]+<\/li>)*/\n\1<ol>&\n\1<\/ol>/g
     }
     # Add them for the main tree
-    s/(^|\n)( *)(<li>.*)(<\/ol>|<\/li>)/\1\2<ol>\n\2\3\4\n\2<\/ol>/
+    s/(^\n?|\n\n|[^o][^l]>\n)( *)(<li>.*)(<\/ol>|<\/li>)/\1\2<ol>\n\2\3\4\n\2<\/ol>/
 }
 
 # These are copied from the previous block
