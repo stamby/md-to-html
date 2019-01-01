@@ -21,7 +21,7 @@ It also works this way on Bash:
 
 The output of that being:
 
-```
+```html
 <ol>
 <li>Hello!</li>
 </ol>
