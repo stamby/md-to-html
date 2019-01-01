@@ -35,6 +35,9 @@ s/([0-9]) ?(>=|=>) ?([0-9])/\1 \&ge\; \3/g
 s/([0-9]) ?(<=|=<) ?([0-9])/\1 \&le\; \3/g
 
 # <text>
+# If it's an email address, make it an email link
+s/(^|[^\\<])<([^>]+@[^>]+)>([^>]|$)/\1<a href="mailto:\2">\2<\/a>\3/g
+# Otherwise, assume it's a web page
 s/(^|[^\\<])<([^>]+)>([^>]|$)/\1<a href="\2">\2<\/a>\3/g
 
 # ![image](url)
