@@ -103,9 +103,10 @@ x
 }
 
 /(^|\n) *>/{
+    # Loop until all the leading ">" signs become spaces
     :a
     /(^|\n) *> *>/{
-        s/(^|\n)( *)>( *)/\1\2 \3/g
+        s/(^|\n)( *)>( *)>/\1\2 \3/g
         ta
     }
     s/(^|\n)( *)> *([^\n]+)/\1\2<p>\3<\/p>/g
@@ -113,6 +114,8 @@ x
         s/\n( +)<p>[^\n]+<\/p>(\n\1<p>[^\n]+<\/p>)*/\n\1<blockquote>&\n\1<\/blockquote>/g
     }
     s/(^|\n)( *)(<p>.*)(<\/blockquote>|<\/p>)/\1\2<blockquote>\n\2\3\4\n\2<\/blockquote>/
+    # This is aesthetic
+    s/(^|\n) *(<\/?blockquote>)/\1\2/g
 }
 
 # Remove escape characters from special Markdown characters
