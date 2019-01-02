@@ -2,8 +2,10 @@
 
 ### md-to-html: Sed script that converts Markdown to HTML code
 
-# &, >, <, >=, =>, <=, =< signs
+# HTML entities
 s/\&/\&amp\;/g
+s/"/&quot\;/g
+s/'/&apos\;/g
 s/>/\&gt\;/g
 s/</\&lt\;/g
 s/(>=|=>)/\&ge\;/g
@@ -35,7 +37,7 @@ x
 ## Per-word formatting
 
 # <text>
-s/(^| )\&lt\; *([^ ]*[:#\/][^ ]*) *\&gt\;( |$)/\1<a href="\2">\2<\/a>\3/g
+s/(^| )\&lt\; *([^ ]*[:\/][^ ]*) *\&gt\;( |$)/\1<a href="\2">\2<\/a>\3/g
 s/(^| )\&lt\; *([^ ]*@[^ ]+) *\&gt\;( |$)/\1<a href="mailto:\2">\2<\/a>\3/g
 
 # ![image](url)
