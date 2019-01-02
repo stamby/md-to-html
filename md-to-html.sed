@@ -77,25 +77,22 @@ x
 
 /(^|\n) *[0-9]+ *[\.-]/{
     # Add "<li>" and "</li>" to all occurrences
-    s/(^|\n)( *)[0-9]+ *[\.-] *([^\n]+)/\1\2<li>\3<\/li>/g
-    # Check whether there are subtrees
-    /\n * <li>/{
-        # Note that these are assumed to start with a new line and a space
-        # Add "<ol>" and "</ol>" delimiters for subtrees
-        s/\n( +)<li>[^\n]+<\/li>(\n\1<li>[^\n]+<\/li>)*/\n\1<ol>&\n\1<\/ol>/g
-    }
-    # Add them for the main tree
-    s/(^\n?|\n\n|[^o][^l]>\n)( *)(<li>.*)(<\/ol>|<\/li>)/\1\2<ol>\n\2\3\4\n\2<\/ol>/
+    s/(^|\n)( *)[0-9]+ *[\.-] *([^\n]+)/\1\2<oli>\3<\/oli>/g
+    s/\n( *)<oli>[^\n]+<\/oli>(\n\1<oli>[^\n]+<\/oli>)*/\n\1<ol>&\n\1<\/ol>/g
+    s/(\n *)<\/ol>(\1 +<ol>)/\2/g
+    s/(<\/ol>)\n *<ol>/\1/g
+    # Add new olines in the right places, close olist
+    s/^\n*(.*)\n?/\1\n<\/ol>\n/
 }
 
 # These are copied from the previous block
 # except for the regular expressions and HTML tags
 /(^|\n) *[\*\+-] *[^\*\+-]/{
-    s/(^|\n)( *) *[\*\+-] *([^\n]+)/\1\2<li>\3<\/li>/g
-    /\n * <li>/{
-        s/\n( +)<li>[^\n]+<\/li>(\n\1<li>[^\n]+<\/li>)*/\n\1<ul>&\n\1<\/ul>/g
-    }
-    s/(^\n?|\n\n|[^u][^l]>\n)( *)(<li>.*)(<\/ul>|<\/li>)/\1\2<ul>\n\2\3\4\n\2<\/ul>/
+    s/(^|\n)( *)[\*\+-] *([^\n]+)/\1\2<uli>\3<\/uli>/g
+    s/\n( *)<uli>[^\n]+<\/uli>(\n\1<uli>[^\n]+<\/uli>)*/\n\1<ul>&\n\1<\/ul>/g
+    s/(\n *)<\/ul>(\1 +<ul>)/\2/g
+    s/(<\/ul>)\n *<ul>/\1/g
+    s/^\n*(.*)\n?/\1\n<\/ul>\n/
 }
 
 /(^|\n) *>/{
@@ -115,14 +112,12 @@ x
 }
 
 # Remove escape characters from special Markdown characters
-# This affects all lines whether they're in list or not
 s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
 
 # If any of the previous matches were successful
 /\n *<li>|(^|\n) *<blockquote>/{
-    # Add new lines in the right places
-    s/^\n*(.*)\n?/\1\n/
-    # If this is the last line, remove the exceeding new line
+    s/<(\/?)[ou]li>/<\1li>/g
+    # If this is the last line, remove the exceeding new lin
     $s/\n$//
     # Go to the end of script
     b
