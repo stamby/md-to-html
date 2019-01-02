@@ -2,7 +2,8 @@
 
 ### md-to-html: Sed script that converts Markdown to HTML code
 
-# >, <, >=, =>, <=, =< signs
+# &, >, <, >=, =>, <=, =< signs
+s/\&/\&amp\;/g
 s/>/\&gt\;/g
 s/</\&lt\;/g
 s/(>=|=>)/\&ge\;/g
