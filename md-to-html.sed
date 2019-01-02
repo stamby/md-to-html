@@ -34,8 +34,8 @@ x
 ## Per-word formatting
 
 # <text>
-s/(^|[^\\<])<([^>]*[:\/][^>]*|[^>@]+)>([^>]|$)/\1<a href="\2">\2<\/a>\3/g
-s/(^|[^\\<])<([^>]+@[^>]+)>([^>]|$)/\1<a href="mailto:\2">\2<\/a>\3/g
+s/(^| )\&lt\; *([^ ]*[:\/][^ ]*) *\&gt\;( |$)/\1<a href="\2">\2<\/a>\3/g
+s/(^| )\&lt\; *([^ ]*@[^ ]+) *\&gt\;( |$)/\1<a href="mailto:\2">\2<\/a>\3/g
 
 # ![image](url)
 s/!\[(.*)\] *\( *([^ ]+) *\)/<img src="\2" alt="\1">/g
@@ -58,7 +58,7 @@ s/(^|[^\\\*])\*([^\*]+)\*([^\*]|$)/\1<em>\2<\/em>\3/g
 s/(^|[^\\_])_([^_]+)_([^_]|$)/\1<em>\2<\/em>\3/g
 
 # ~~text~~
-s/(^|[^\\~])~~([^~]+)~~([^~]|$)/\1<s>\2<\/s>\3/g
+s/(^|[^\\~])~~(.+)~~([^~]|$)/\1<s>\2<\/s>\3/g
 
 # `text`
 s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
@@ -75,28 +75,25 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 x
 
 /(^|\n) *[0-9]+ *[\.-]/{
-    # Add "<li>" and "</li>" to all occurrences
+    # Add "<oli>" and "</oli>" to all occurrences
     s/(^|\n)( *)[0-9]+ *[\.-] *([^\n]+)/\1\2<oli>\3<\/oli>/g
-    s/(^|\n)( *)<oli>[^\n]+<\/oli>(\n\1<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
-    s/(\n *)<\/ol>(\1 +<ol>)/\2/g
-    s/(<\/ol>)\n *<ol>/\1/g
-    s/\n( *)<\/ol>(\n\1<oli>)/\2/g
-    # If there are subtrees, close the list
-    s/.*\n +<\/ol>/&\n<\/ol>/
-    # Add new lines in the right places
-    s/^\n*(.*)\n?/\1\n/
+    # Add "<ol>" and "</ol>" tags, up to 3 levels are supported
+    s/(^|\n)( ?)<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
+    s/(^|\n)( {1})<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
+    s/(^|\n)( {2})<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
+    s/(^|\n)( {3})<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
+    s/(^|\n)( {4})<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
 }
 
 # These are copied from the previous block
 # except for the regular expressions and HTML tags
-/(^|\n) *[\*\+-] *[^\*\+-]/{
+/(^|\n) *[\*\+-]/{
     s/(^|\n)( *)[\*\+-] *([^\n]+)/\1\2<uli>\3<\/uli>/g
-    s/(^|\n)( *)<uli>[^\n]+<\/uli>(\n\1<uli>[^\n]+<\/uli>)*/\1\2<ul>&\n\2<\/ul>/g
-    s/(\n *)<\/ul>(\1 +<ul>)/\2/g
-    s/(<\/ul>)\n *<ul>/\1/g
-    s/\n( *)<\/ul>(\n\1<uli>)/\2/g
-    s/.*\n +<\/ul>/&\n<\/ul>/
-    s/^\n*(.*)\n?/\1\n/
+    s/(^|\n)( ?)<uli>[^\n]+<\/uli>(\n\2 *<uli>[^\n]+<\/uli>)*/\1\2<ul>&\n\2<\/ul>/g
+    s/(^|\n)( {1})<uli>[^\n]+<\/uli>(\n\2 *<uli>[^\n]+<\/uli>)*/\1\2<ul>&\n\2<\/ul>/g
+    s/(^|\n)( {2})<uli>[^\n]+<\/uli>(\n\2 *<uli>[^\n]+<\/uli>)*/\1\2<ul>&\n\2<\/ul>/g
+    s/(^|\n)( {3})<uli>[^\n]+<\/uli>(\n\2 *<uli>[^\n]+<\/uli>)*/\1\2<ul>&\n\2<\/ul>/g
+    s/(^|\n)( {4})<uli>[^\n]+<\/uli>(\n\2 *<uli>[^\n]+<\/uli>)*/\1\2<ul>&\n\2<\/ul>/g
 }
 
 /(^|\n) *\&gt\;/{
@@ -120,6 +117,7 @@ s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
 # If any of the previous matches were successful
 /\n *<[ou]li>|(^|\n) *<blockquote>/{
     s/<(\/?)[ou]li>/<\1li>/g
+    s/^\n*(.*)\n?/\1\n/
     # If this is the last line, remove the exceeding new lin
     $s/\n$//
     # Go to the end of script
