@@ -1,5 +1,7 @@
 # md-to-html
 
+**Note:** combining two different types of lists does not work properly. Will be fixed soon.
+
 ## How to try this script
 
 Run this from your terminal:
