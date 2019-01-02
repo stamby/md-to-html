@@ -111,11 +111,10 @@ x
     s/^\n+//
 }
 
-# Remove escape characters from special Markdown characters
-s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
-
 # If any of the previous matches were successful
 /\n *<[ou]li>|(^|\n) *<blockquote>/{
+    # Remove escape characters from special Markdown characters
+    s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
     s/<(\/?)[ou]li>/<\1li>/g
     s/^\n*(.*)\n?/\1\n/
     # If this is the last line, remove the exceeding new lin
