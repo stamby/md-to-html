@@ -82,8 +82,8 @@ x
     s/(\n *)<\/ol>(\1 +<ol>)/\2/g
     s/(<\/ol>)\n *<ol>/\1/g
     s/\n( *)<\/ol>(\n\1<oli>)/\2/g
-    # Add new lines in the right places, close list
-    s/^\n*(.*)\n?/\1\n<\/ol>\n/
+    # Add new lines in the right places
+    s/^\n*(.*)\n?/\1\n/
 }
 
 # These are copied from the previous block
@@ -94,7 +94,7 @@ x
     s/(\n *)<\/ul>(\1 +<ul>)/\2/g
     s/(<\/ul>)\n *<ul>/\1/g
     s/\n( *)<\/ul>(\n\1<uli>)/\2/g
-    s/^\n*(.*)\n?/\1\n<\/ul>\n/
+    s/^\n*(.*)\n?/\1\n/
 }
 
 /(^|\n) *>/{
