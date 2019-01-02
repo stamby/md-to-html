@@ -8,8 +8,6 @@ s/</\&lt\;/g
 s/(>=|=>)/\&ge\;/g
 s/(<=|=<)/\&le\;/g
 
-s/^( *)\&gt\;/\1>/g
-
 ## Code snippets
 /^ *```/{
     # Exchange hold and pattern spaces
@@ -67,7 +65,7 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 
 ## Numbered lists, bulleted lists, blockquotes
 
-/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *>/{
+/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *\&gt\;/{
     H
     # Only when we are not at the last line, start a new cycle
     $!d
@@ -101,15 +99,15 @@ x
     s/^\n*(.*)\n?/\1\n/
 }
 
-/(^|\n) *>/{
+/(^|\n) *\&gt\;/{
     # Loop until all the leading ">" signs become spaces
     :a
-    /(^|\n) *> *>/{
-        s/(^|\n)( *)>( *)>/\1\2 \3/g
+    /(^|\n) *\&gt\; *\&gt\;/{
+        s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2 \3/g
         ta
     }
-    s/(^|\n)( *)> *([^\n]+)/\1\2<p>\3<\/p>/g
-    /\n * <p>/{
+    s/(^|\n)( *)\&gt\; *([^\n]+)/\1\2<p>\3<\/p>/g
+    /\n +<p>/{
         s/\n( +)<p>[^\n]+<\/p>(\n\1<p>[^\n]+<\/p>)*/\n\1<blockquote>&\n\1<\/blockquote>/g
     }
     s/(^|\n)( *)(<p>.*)(<\/blockquote>|<\/p>)/\1\2<blockquote>\n\2\3\4\n\2<\/blockquote>\n/
