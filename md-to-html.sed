@@ -3,13 +3,13 @@
 ### md-to-html: Sed script that converts Markdown to HTML code
 
 # HTML entities
-s/\&/\&amp\;/g
-s/"/&quot\;/g
-s/'/&apos\;/g
-s/>/\&gt\;/g
-s/</\&lt\;/g
 s/(>=|=>)/\&ge\;/g
 s/(<=|=<)/\&le\;/g
+s/\&/\&amp\;/g
+s/"/\&quot\;/g
+s/'/\&apos\;/g
+s/>/\&gt\;/g
+s/</\&lt\;/g
 
 ## Code snippets
 /^ *```/{
