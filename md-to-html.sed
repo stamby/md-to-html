@@ -68,7 +68,8 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 
 ## Numbered lists, bulleted lists, blockquotes
 
-/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *\&gt\;/{
+#/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *\&gt\;/{
+/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]/{
     H
     # Only when we are not at the last line, start a new cycle
     $!d
@@ -82,7 +83,8 @@ x
     # Add "<oli>" and "</oli>" to all occurrences
     s/(^|\n)( *)[0-9]+ *[\.-] *([^\n]+)/\1\2<oli>\3<\/oli>/g
     # Add "<ol>" and "</ol>" tags, up to 3 levels are supported
-    s/(^|\n)( ?)<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
+    s/(^|\n)<oli>[^\n]+<\/oli>(\n *<oli>[^\n]+<\/oli>)*/\1<ol>&\n<\/ol>/g
+    s/(^|\n)( )<oli>[^\n]+<\/oli>(\n\2 *<oli>[^\n]+<\/oli>)*/\1\2<ol>&\n\2<\/ol>/g
     s/(^|\n)( {2})<oli>[^\n]+<\/oli>(\n\2 *<[ou]li>[^\n]+<\/[ou]li>)*/\1\2<ol>&\n\2<\/ol>/g
     s/(^|\n)( {3})<oli>[^\n]+<\/oli>(\n\2 *<[ou]li>[^\n]+<\/[ou]li>)*/\1\2<ol>&\n\2<\/ol>/g
     s/(^|\n)( {4})<oli>[^\n]+<\/oli>(\n\2 *<[ou]li>[^\n]+<\/[ou]li>)*/\1\2<ol>&\n\2<\/ol>/g
@@ -123,6 +125,7 @@ s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
     s/^\n+//
     p
     /\n[^\n]+$/!d
+    s/.*\n//
 }
 
 x
