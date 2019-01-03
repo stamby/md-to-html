@@ -40,6 +40,9 @@ x
 s/(^| )\&lt\; *([^ ]*[:\/][^ ]*) *\&gt\;( |$)/\1<a href="\2">\2<\/a>\3/g
 s/(^| )\&lt\; *([^ ]*@[^ ]+) *\&gt\;( |$)/\1<a href="mailto:\2">\2<\/a>\3/g
 
+# [![image](url](url)
+s/\[!\[(.*)\] *\( *([^ ]+) *\) *] *\( *([^ ]+) *\)/<a href="\3"><img src="\2" alt="\1"><\/a>/g
+
 # ![image](url)
 s/!\[(.*)\] *\( *([^ ]+) *\)/<img src="\2" alt="\1">/g
 s/!\((.*)\)/<img src="\1">/g
@@ -68,8 +71,7 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
 
 ## Numbered lists, bulleted lists, blockquotes
 
-#/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *\&gt\;/{
-/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]/{
+/^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *\&gt\;/{
     H
     # Only when we are not at the last line, start a new cycle
     $!d
@@ -117,15 +119,14 @@ x
     s/(^|\n)( *)(<p>.*)(<\/blockquote>|<\/p>)/\1\2<blockquote>\n\2\3\4\n\2<\/blockquote>\n/
 }
 
-# Remove escape characters
-s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
-
 # If any of the previous matches were successful
 /\n *<[ou]li>|(^|\n) *<blockquote>/{
     s/<(\/?)[ou]li>/<\1li>/g
     s/^\n+//
-    p
+    # Remove escape characters
+    s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
     /\n[^\n]+$/!d
+    p
     s/.*\n//
 }
 
@@ -137,18 +138,34 @@ ${
     }
 }
 
-# Remove escape characters again (exact copy of the former)
-s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
-
 ## Headers and paragraphs
 
 # No headers means it's a normal paragraph
-s/^ *[^#].*/<p>&<\/p>/;t
+/^ *[^#]/{
+    s/.*/<p>&<\/p>/
+    b
+}
 
 # Headers
-s/^ *#{6} *([^#].*)*( *#+)?$/<h6>\1<\/h6>/;t
-s/^ *#{5} *([^#].*)*( *#+)?$/<h5>\1<\/h5>/;t
-s/^ *#{4} *([^#].*)*( *#+)?$/<h4>\1<\/h4>/;t
-s/^ *#{3} *([^#].*)*( *#+)?$/<h3>\1<\/h3>/;t
-s/^ *#{2} *([^#].*)*( *#+)?$/<h2>\1<\/h2>/;t
-s/^ *# *([^#].*)*( *#+)?$/<h1>\1<\/h1>/;t
+
+s/^ *(\#+) *([^#].*)[# ]*$/\1 \2/
+
+h
+x
+s/^[# ]+ ([[:alnum:] ]*).*$/\L\1/
+s/ +/-/g
+s/-+$//
+
+H
+s/.*//
+x
+
+s/^#{6} (.*)\n(.*)$/<h6 id="\2">\1<\/h6>/
+s/^#{5} (.*)\n(.*)$/<h5 id="\2">\1<\/h5>/
+s/^#{4} (.*)\n(.*)$/<h4 id="\2">\1<\/h4>/
+s/^#{3} (.*)\n(.*)$/<h3 id="\2">\1<\/h3>/
+s/^#{2} (.*)\n(.*)$/<h2 id="\2">\1<\/h2>/
+s/^# (.*)\n(.*)$/<h1 id="\2">\1<\/h1>/
+
+# Remove escape characters again (exact copy of the former)
+s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
