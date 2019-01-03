@@ -72,6 +72,7 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
     H
     # Only when we are not at the last line, start a new cycle
     $!d
+    $s/.*//
 }
 
 # Find out what's being held
@@ -113,16 +114,24 @@ x
     s/(^|\n)( *)(<p>.*)(<\/blockquote>|<\/p>)/\1\2<blockquote>\n\2\3\4\n\2<\/blockquote>\n/
 }
 
+# Remove escape characters
+s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
+
 # If any of the previous matches were successful
 /\n *<[ou]li>|(^|\n) *<blockquote>/{
     s/<(\/?)[ou]li>/<\1li>/g
     s/^\n+//
     p
     /\n[^\n]+$/!d
-    s/.*//
 }
 
 x
+
+${
+    /./!{
+        d
+    }
+}
 
 # Remove escape characters again (exact copy of the former)
 s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
