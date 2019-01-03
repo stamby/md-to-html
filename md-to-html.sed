@@ -11,6 +11,17 @@ s/'/\&apos\;/g
 s/>/\&gt\;/g
 s/</\&lt\;/g
 
+s/([^\\]):[a-zA-Z0-9]+:/\1\&#x1f31f\;/g
+
+# HTML entities
+s/\\\&ge\;/=>/g
+s/\\\&le\;/<=/g
+s/\\\&amp\;/\&/g
+s/\\\&quot\;/"/g
+s/\\\&apos\;/'/g
+s/\\\&gt\;/>/g
+s/\\\&lt\;/</g
+
 ## Code snippets
 /^ *```/{
     # Exchange hold and pattern spaces
@@ -107,16 +118,17 @@ x
 
 /(^|\n) *\&gt\;/{
     # Loop until all the leading ">" signs become spaces
-    :a
+    :b
     /(^|\n) *\&gt\; *\&gt\;/{
         s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2 \3/g
-        ta
+        tb
     }
     s/(^|\n)( *)\&gt\; *([^\n]+)/\1\2<p>\3<\/p>/g
     /\n +<p>/{
         s/\n( +)<p>[^\n]+<\/p>(\n\1<p>[^\n]+<\/p>)*/\n\1<blockquote>&\n\1<\/blockquote>/g
     }
     s/(^|\n)( *)(<p>.*)(<\/blockquote>|<\/p>)/\1\2<blockquote>\n\2\3\4\n\2<\/blockquote>\n/
+    b
 }
 
 # If any of the previous matches were successful
