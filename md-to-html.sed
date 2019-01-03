@@ -13,7 +13,6 @@ s/</\&lt\;/g
 
 s/([^\\]):[a-zA-Z0-9]+:/\1\&#x1f31f\;/g
 
-# HTML entities
 s/\\\&ge\;/=>/g
 s/\\\&le\;/<=/g
 s/\\\&amp\;/\&/g
@@ -56,7 +55,6 @@ s/\[!\[(.*)\] *\( *([^ ]+) *\) *] *\( *([^ ]+) *\)/<a href="\3"><img src="\2" al
 
 # ![image](url)
 s/!\[(.*)\] *\( *([^ ]+) *\)/<img src="\2" alt="\1">/g
-s/!\((.*)\)/<img src="\1">/g
 
 # [Web site](url)
 s/\[(.*)\] *\( *([^ ]+) *"([^"]+)"\)/<a href="\2" title="\3">\1<\/a>/g
@@ -86,7 +84,6 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
     H
     # Only when we are not at the last line, start a new cycle
     $!d
-    s/.*//
 }
 
 # Find out what's being held
@@ -120,7 +117,7 @@ x
     # Loop until all the leading ">" signs become spaces
     :b
     /(^|\n) *\&gt\; *\&gt\;/{
-        s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2\3/g
+        s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2 \3/g
         tb
     }
     s/(^|\n)( *)\&gt\; *([^\n]+)/\1\2<p>\3<\/p>/g
@@ -135,18 +132,16 @@ x
 # If any of the previous matches were successful
 /\n *<[ou]li>|\n *<p>/{
     s/<(\/?)[ou]li>/<\1li>/g
-    s/\n*$/\n/
     # Remove escape characters
     s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
+    s/^\n+//
+    s/.*/&\n/
     p
-    /\n[^\n]+$/!d
+    $!d
     s/.*\n//
 }
 
 x
-/./!{
-    d
-}
 
 ## Headers and paragraphs
 
@@ -176,6 +171,8 @@ s/^#{4} (.*)\n(.*)$/<h4 id="\2">\1<\/h4>/
 s/^#{3} (.*)\n(.*)$/<h3 id="\2">\1<\/h3>/
 s/^#{2} (.*)\n(.*)$/<h2 id="\2">\1<\/h2>/
 s/^# (.*)\n(.*)$/<h1 id="\2">\1<\/h1>/
+
+s/\n+//g
 
 # Remove escape characters again (exact copy of the former)
 s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
