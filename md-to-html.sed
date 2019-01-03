@@ -72,7 +72,7 @@ s/(^|[^\\`])`([^`]+)`([^`]|$)/\1<code>\2<\/code>\3/g
     H
     # Only when we are not at the last line, start a new cycle
     $!d
-    $s/.*//
+    s/.*//
 }
 
 # Find out what's being held
