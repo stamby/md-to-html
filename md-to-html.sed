@@ -120,34 +120,32 @@ x
     # Loop until all the leading ">" signs become spaces
     :b
     /(^|\n) *\&gt\; *\&gt\;/{
-        s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2 \3/g
+        s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2\3/g
         tb
     }
     s/(^|\n)( *)\&gt\; *([^\n]+)/\1\2<p>\3<\/p>/g
-    /\n +<p>/{
-        s/\n( +)<p>[^\n]+<\/p>(\n\1<p>[^\n]+<\/p>)*/\n\1<blockquote>&\n\1<\/blockquote>/g
-    }
-    s/(^|\n)( *)(<p>.*)(<\/blockquote>|<\/p>)/\1\2<blockquote>\n\2\3\4\n\2<\/blockquote>\n/
-    b
+    s/(^|\n)<p>[^\n]+<\/p>(\n *<p>[^\n]+<\/p>)*/\1<blockquote>&\n<\/blockquote>/g
+    s/(^|\n)( )<p>[^\n]+<\/p>(\n\2 *<p>[^\n]+<\/p>)*/\1\2<blockquote>&\n\2<\/blockquote>/g
+    s/(^|\n)( {2})<p>[^\n]+<\/p>(\n\2 *<p>[^\n]+<\/p>)*/\1\2<blockquote>&\n\2<\/blockquote>/g
+    s/(^|\n)( {3})<p>[^\n]+<\/p>(\n\2 *<p>[^\n]+<\/p>)*/\1\2<blockquote>&\n\2<\/blockquote>/g
+    s/(^|\n)( {4})<p>[^\n]+<\/p>(\n\2 *<p>[^\n]+<\/p>)*/\1\2<blockquote>&\n\2<\/blockquote>/g
+    s/(^|\n)( {5,})<p>[^\n]+<\/p>(\n\2 *<p>[^\n]+<\/p>)*/\1\2<blockquote>&\n\2<\/blockquote>/g
 }
 
 # If any of the previous matches were successful
-/\n *<[ou]li>|(^|\n) *<blockquote>/{
+/\n *<[ou]li>|\n *<p>/{
     s/<(\/?)[ou]li>/<\1li>/g
-    s/^\n+//
+    s/\n*$/\n/
     # Remove escape characters
     s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
-    /\n[^\n]+$/!d
     p
+    /\n[^\n]+$/!d
     s/.*\n//
 }
 
 x
-
-${
-    /./!{
-        d
-    }
+/./!{
+    d
 }
 
 ## Headers and paragraphs
