@@ -13,7 +13,6 @@ s/</\&lt\;/g
 
 s/([^\\]):[a-zA-Z0-9]+:/\1\&#x1f31f\;/g
 
-# HTML entities
 s/\\\&ge\;/=>/g
 s/\\\&le\;/<=/g
 s/\\\&amp\;/\&/g
