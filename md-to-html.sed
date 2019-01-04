@@ -135,7 +135,7 @@ x
 /\n *<[ou]li>|\n *<p>/{
     s/<(\/?)[ou]li>/<\1li>/g
     # Remove escape characters
-    s/\\(.)/\1/g
+    s/([^\\])\\(.)/\1\2/g
 #    s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
     s/^\n+//
     $!s/.*/&\n/
@@ -146,6 +146,13 @@ x
 x
 
 ## Headers and paragraphs
+
+# Remove escape characters again (exact copy of the former)
+s/([^\\])\\(.)/\1\2/g
+
+/<\/p>$/{
+    b
+}
 
 # No headers means it's a normal paragraph
 /^ *[^#]/{
@@ -161,7 +168,12 @@ x
         s/^(.*)\n *-+ */## \1/
     }
     /^[^#]/{
-        s/^[^\n]*/<p>&<\/p>/
+        /\n *[^ ].*$/{
+            s/.*/<p>&\\<\/p\\>/
+        }
+        /\n *$/{
+            s/^[^\n]+/<p>&<\/p>/
+        }
         P
         D
     }
@@ -189,6 +201,3 @@ s/^#{2} (.*)\n(.*)$/<h2 id="\2">\1<\/h2>/
 s/^# (.*)\n(.*)$/<h1 id="\2">\1<\/h1>/
 
 s/\n+//g
-
-# Remove escape characters again (exact copy of the former)
-s/\\(.)/\1/g
