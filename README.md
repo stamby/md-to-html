@@ -1,8 +1,13 @@
 # md-to-html
 
-**To fix:** combining two different types of lists does not work properly.
+**To fix**
 
-**Limitations:** inline HTML is likely never to be supported. You can add three backticks (\`\`\`) at each end of the block instead.
+ - Not working well when lists of a different type are nested together.
+
+**Limitations**
+
+ - Inline HTML is likely never to be supported. You can add three backticks (\`\`\`) at each end of the block instead.
+ - Every word surrounded by two colons (:likethis:) is assumed to be an emoji and becomes a unicode star.
 
 ## How to try this script
 
