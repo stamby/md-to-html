@@ -2,7 +2,7 @@
 
 **To fix:** combining two different types of lists does not work properly.
 
-**Limitations:** Inline HTML is likely never to be supported. You can add three backticks (\`\`\`) at each end of the HTML block instead.
+**Limitations:** inline HTML is likely never to be supported. You can add three backticks (\`\`\`) at each end of the block instead.
 
 ## How to try this script
 
