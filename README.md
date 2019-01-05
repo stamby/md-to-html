@@ -7,7 +7,7 @@
 **Limitations**
 
  - Inline HTML is likely never to be supported. You can add three backticks *(\`\`\`)* at each end of the block instead.
- - Every word surrounded by two colons *(:likethis:)* is assumed to be an emoji and then becomes a unicode star.
+ - Every word surrounded by two colons *(:likethis:)* is assumed to be an emoji and thus becomes a unicode star.
 
 ## How to try this script
 
