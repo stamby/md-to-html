@@ -1,6 +1,8 @@
 # md-to-html
 
-**Note:** combining two different types of lists does not work properly. Will be fixed soon.
+**To fix:** combining two different types of lists does not work properly.
+
+**Limitations:** Inline HTML is likely never to be supported. You can add three backticks (\`\`\`) at each end of the HTML block instead.
 
 ## How to try this script
 
@@ -28,3 +30,4 @@ The output of that being:
 <li>Hello!</li>
 </ol>
 ```
+ 
