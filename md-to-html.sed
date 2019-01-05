@@ -2,6 +2,9 @@
 
 ### md-to-html: Sed script that converts Markdown to HTML code
 
+s/\t+/ /g
+s/^ +$//
+
 # HTML entities
 s/(>=|=>)/\&ge\;/g
 s/(<=|=<)/\&le\;/g
@@ -36,10 +39,11 @@ s/\\\&lt\;/</g
     b
 }
 
-# If a block of code is being processed, jump onto the next line
 x
+# If a block of code is being processed, jump onto the next line
 /^ *```/{
     x
+    /^ *$/d
     b
 }
 x
@@ -118,8 +122,8 @@ x
 /(^|\n) *\&gt\;/{
     # Loop until all the leading ">" signs become spaces
     :b
-    /(^|\n) *\&gt\; *\&gt\;/{
-        s/(^|\n)( *)\&gt\;( *)\&gt\;/\1\2 \3/g
+    /(^|\n) *\&gt\; */{
+        s/(^|\n)( *)\&gt\;/\1 /g
         tb
     }
     s/(^|\n)( *)\&gt\; *([^\n]+)/\1\2<p>\3<\/p>/g
@@ -136,7 +140,6 @@ x
     s/<(\/?)[ou]li>/<\1li>/g
     # Remove escape characters
     s/([^\\])\\(.)/\1\2/g
-#    s/\\(`|-|\*|_|\{|\}|\[|\]|\(|\)|#|\+|\.|!)/\1/g
     s/^\n+//
     $!s/.*/&\n/
     p
@@ -150,32 +153,38 @@ x
 # Remove escape characters again (exact copy of the former)
 s/([^\\])\\(.)/\1\2/g
 
-# No headers means it's a normal paragraph
 /^ *[^#]/{
     N
-    /\n *=+ *$/{
-        s/^(.*)\n *=+ */# \1/
+    # We've attached the next line to the current pattern space
+    # Find out if the first line was a header
+    /\n *[=-]+ *$/{
+        s/^ *(.*)\n *=+ */# \1/
+        s/^ *(.*)\n *-+ */## \1/
     }
-    /\n--+$/{
-        s/^(.*)\n-+ */## \1/
-    }
-    /^[^#]/{
-        /\n *[0-9]+ *[\.-]|\n *[\*\+-] *[^\*\+-]|\n *>/{
+    /^ *#/!{
+        # First line is within a paragraph
+        /\n *[0-9]+ *[\.-]|\n *[\*\+-]|\n *>|\n *#|\n *$/{
+            # Second line is either a list or a header, or it's blank
+            # Polish the first line
+            /<\/pp>\n/{
+                s/ *<\/pp>\n/<\/p>\n/
+                # Continue on next line
+                P
+                D
+            }
+            s/^ *([^\n]+)/<p>\1<\/p>/
             P
             D
         }
-        /<\/p>\n/{
-            s/([^ ]) ?<\/p>\n ?/\1 /
-            s/$/<\/p>/
+        /<\/pp>\n/{
+            s/ *<\/pp>\n/\n/
+            s/$/\\<\/pp\\>/
+            # Continue on next line
             P
             D
         }
-        /\n *[^ ].*$/{
-            s/.*/<p>&\\<\/p\\>/
-        }
-        /\n *$/{
-            s/^[^\n]+/<p>&<\/p>/
-        }
+        s/ *<\/pp>\n/<\/p>\n/
+        s/.*[^ ].*/<p>&\\<\/pp\\>/
         P
         D
     }
@@ -183,7 +192,7 @@ s/([^\\])\\(.)/\1\2/g
 
 # Headers
 
-s/^ *(\#+) *(.*[^#])[# ]*$/\1 \2/
+s/^ *(#+) *(.*[^#])[# ]*$/\1 \2/
 
 h
 x
