@@ -43,7 +43,6 @@ x
 # If a block of code is being processed, jump onto the next line
 /^ *```/{
     x
-    /^ *$/d
     b
 }
 x
