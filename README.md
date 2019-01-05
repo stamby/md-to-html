@@ -8,6 +8,7 @@
 
  - Inline HTML is likely never to be supported. You can add three backticks *(\`\`\`)* at each end of the block instead.
  - Every word surrounded by two colons *(:likethis:)* is assumed to be an emoji and thus becomes a unicode star.
+ - Links that are referenced by using brackets are not supported.
 
 ## How to try this script
 
