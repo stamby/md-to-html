@@ -153,6 +153,7 @@ x
 s/([^\\])\\(.)/\1\2/g
 
 /^ *[^#]/{
+    $s/<\/pp>$/<\/p>/
     N
     # We've attached the next line to the current pattern space
     # Find out if the first line was a header
