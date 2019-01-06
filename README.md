@@ -6,7 +6,7 @@
 
 **Limitations**
 
- - Inline HTML is likely never to be supported. You can add three backticks *(\`\`\`)* at each end of the block instead.
+ - Inline HTML is not supported yet.
  - Every word surrounded by two colons *(:likethis:)* is assumed to be an emoji and thus becomes a unicode star.
  - Links that are referenced by using brackets *(\[like this\] \[reference\])* are not supported.
 
