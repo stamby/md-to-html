@@ -30,8 +30,10 @@ s/\\\&lt\;/</g
     x
     # Hold space did not start with three backticks
     /^ *```/!{
-        s/.*/<pre><code>/
-        b
+        N
+        s/.*\n/\n\\<pre\\>\\<code\\>/
+        P
+        D
     }
     # Remove everything from hold space
     s/.*//
