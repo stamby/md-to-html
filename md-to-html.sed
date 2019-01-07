@@ -199,7 +199,6 @@ s/([^\\])\\(.)/\1\2/g
             D
         }
         # If that wasn't the case, make this a multi-line paragraph
-        s/ *<\/pp>\n/\n/
         s/.*[^ ].*/<p>&\\<\/pp\\>/
         P
         D
