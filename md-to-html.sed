@@ -143,7 +143,6 @@ x
     # Remove escape characters
     s/([^\\])\\(.)/\1\2/g
     s/^\n+//
-    $!s/.*/&\n/
     p
     s/.*//
 }
