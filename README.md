@@ -1,5 +1,7 @@
 # md-to-html
 
+Following John Gruber's [Markdown syntax](https://daringfireball.net/projects/markdown/syntax) guide with some exceptions, listed below.
+
 **To fix**
 
  - Not working well when lists of a different type are nested together.
@@ -36,4 +38,3 @@ The output of that being:
 <li>Hello!</li>
 </ol>
 ```
- 
