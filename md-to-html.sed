@@ -33,7 +33,7 @@ s/\\\&lt\;/</g
         s/.*/<pre><code>/
         b
     }
-    # Remove everything from the hold space
+    # Remove everything from hold space
     s/.*//
     x
     # This is where the code block ends
