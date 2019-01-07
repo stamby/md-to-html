@@ -161,6 +161,7 @@ s/([^\\])\\(.)/\1\2/g
             s/<\/pp>$/<\/p>/
             b
         }
+        # If we got here, the last line is a paragraph on its own
         s/.*/<p>&<\/p>/
         # We can't append the next line because there is no more left
         b
@@ -173,7 +174,7 @@ s/([^\\])\\(.)/\1\2/g
         s/^ *(.*)\n *-+ */## \1/
     }
     /^ *#/!{
-        # First line is within a paragraph
+        # First line is within a paragraph, look at the second one
         /\n *[0-9]+ *[\.-]|\n *[\*\+-]|\n *>|\n *#|\n *$/{
             # Second line is either a list or a header, or it's blank
             # Polish the first line
@@ -183,10 +184,13 @@ s/([^\\])\\(.)/\1\2/g
                 P
                 D
             }
+            # Make the first line a paragraph on its own
             s/^ *([^\n]+)/<p>\1<\/p>/
             P
             D
         }
+        # Second line belongs to a paragraph
+        # Find out if a multi-line paragraph was just being processed
         /<\/pp>\n/{
             s/ *<\/pp>\n/\n/
             s/$/\\<\/pp\\>/
@@ -194,6 +198,7 @@ s/([^\\])\\(.)/\1\2/g
             P
             D
         }
+        # If that wasn't the case, make this a multi-line paragraph
         s/ *<\/pp>\n/\n/
         s/.*[^ ].*/<p>&\\<\/pp\\>/
         P
