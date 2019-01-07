@@ -29,8 +29,10 @@ s/\\\&lt\;/</g
     # Exchange hold and pattern spaces
     x
     # Hold space did not start with three backticks
-    /^ *```/!s/.*/<pre><code>/
-    t
+    /^ *```/!{
+        s/.*/<pre><code>/
+        b
+    }
     # Remove everything from the hold space
     s/.*//
     x
