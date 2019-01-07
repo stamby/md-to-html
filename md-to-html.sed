@@ -147,18 +147,22 @@ x
 
 x
 
-## Headers and paragraphs
-
 # Remove escape characters again (exact copy of the former)
 s/([^\\])\\(.)/\1\2/g
 
+## Headers and paragraphs
+
 /^ *[^#]/{
     ${
+        # If we came here from above, don't print the same line twice
+        /^ *[0-9]+ *[\.-]|^ *[\*\+-] *[^\*\+-]|^ *\&gt\;/d
+        # Otherwise, if a multi-line paragraph was being processed
         /<\/pp>$/{
             s/<\/pp>$/<\/p>/
             b
         }
         s/.*/<p>&<\/p>/
+        # We can't append the next line because there is no more left
         b
     }
     N
