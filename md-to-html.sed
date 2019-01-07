@@ -212,6 +212,7 @@ s/([^\\])\\(.)/\1\2/g
 
 s/^ *(#+) *(.*[^# ])[# ]*$/\1 \2/
 
+# Make ID tag for header
 h
 x
 s/^[# ]+ (.*[^#])[# ]*$/\L\1/
@@ -229,4 +230,5 @@ s/^#{3} (.*)\n(.*)$/<h3 id="\2">\1<\/h3>/
 s/^#{2} (.*)\n(.*)$/<h2 id="\2">\1<\/h2>/
 s/^# (.*)\n(.*)$/<h1 id="\2">\1<\/h1>/
 
+# Clean up leftover new lines, if we get to this part there will be some
 s/\n//g
