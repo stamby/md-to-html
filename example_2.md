@@ -25,7 +25,7 @@ manually and their syntax has to follow this pattern:
 If there's a header called "bookmark" anywhere in the linked address, no matter
 what level that header is, this link will redirect to it. Keep in mind that
 every character in the ID field that is neither a letter nor a number becomes a
-dash, and then the extra dashes are removed from the edges.
+hyphen, and then the extra hyphens are removed from the edges.
 
 A header that looks like this, when written in Markdown:
 
@@ -44,8 +44,6 @@ And if you wanted to add a link to it, it would look like this:
 ```
 [go to header 3](#header-3)
 ```
-
-[Back to index](#index)
 
 ## Other nonsense
 
