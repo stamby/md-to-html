@@ -32,7 +32,6 @@ s/\\\&lt\;/</g
     /^ *```/!{
         N
         s/.*\n/\n\\<pre\\>\\<code\\>/
-        P
         D
     }
     # Remove everything from hold space
