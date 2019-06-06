@@ -19,7 +19,6 @@ Run this from your terminal:
 ```shell
 git clone https://github.com/stamby/md-to-html
 cd md-to-html
-chmod +x md-to-html.sed
 ./md-to-html.sed example.md > /tmp/example.html
 ```
 
