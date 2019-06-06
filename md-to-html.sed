@@ -43,7 +43,7 @@ s/\\\&lt\;/</g
 }
 
 x
-# If a block of code is being processed, jump onto the next line
+# If a block of code is being processed, jump forward to the next line
 /^ *```/{
     x
     b
