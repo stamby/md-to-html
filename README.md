@@ -4,7 +4,7 @@ Following John Gruber's [Markdown syntax](https://daringfireball.net/projects/ma
 
 **To fix**
 
- - Not working well when lists of a different type are nested together.
+ - Not working well when numbered and unnumbered are nested together.
 
 **Limitations**
 
