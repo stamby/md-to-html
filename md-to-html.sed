@@ -43,7 +43,7 @@ s/\\\&lt\;/</g
 }
 
 x
-# If a block of code is being processed, jump forward to the next line
+# If a block of code is being processed, jump forward to next line
 /^ *```/{
     x
     b
@@ -166,12 +166,12 @@ s/([^\\])\\(.)/\1\2/g
         }
         # If we got here, the last line is a paragraph on its own
         s/.*/<p>&<\/p>/
-        # We can't append the next line because there is no more left
+        # We can't append the next line because there are no more left
         b
     }
     N
     # We've attached the next line to the current pattern space
-    # Find out if the first line was a header
+    # Find out whether first line was a header
     /\n *[=-]+ *$/{
         s/^ *(.*)\n *=+ */# \1/
         s/^ *(.*)\n *-+ */## \1/
@@ -230,5 +230,5 @@ s/^#{3} (.*)\n(.*)$/<h3 id="\2">\1<\/h3>/
 s/^#{2} (.*)\n(.*)$/<h2 id="\2">\1<\/h2>/
 s/^# (.*)\n(.*)$/<h1 id="\2">\1<\/h1>/
 
-# Clean up leftover new lines, if we get to this part there will be some
+# Clean up leftover new lines, if we get to this part there will be some left
 s/\n//g
