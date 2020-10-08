@@ -2,12 +2,7 @@
 
 Following John Gruber's [Markdown syntax](https://daringfireball.net/projects/markdown/syntax) guide with some exceptions, listed below.
 
-**To fix**
-
- - Not working well when numbered and unnumbered lists are nested together.
-
-**Limitations**
-
+ - May not work well when numbered and unnumbered lists are combined.
  - Inline HTML is not supported yet.
  - Every word surrounded by two colons *(:likethis:)* is assumed to be an emoji and thus becomes a unicode star.
  - Links that are referenced by using brackets *(\[like this\] \[reference\])* are not supported.
